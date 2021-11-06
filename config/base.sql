@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS `asesorapp`.`usuario` (
   `contraseña` VARCHAR(45) NOT NULL,
   `tipoCuenta_tipo` INT NOT NULL,
   PRIMARY KEY (`matricula`),
-  UNIQUE INDEX `matricula_UNIQUE` (`matricula` ASC) VISIBLE,
-  INDEX `fk_usuario_tipoCuenta1_idx` (`tipoCuenta_tipo` ASC) VISIBLE,
+  UNIQUE INDEX `matricula_UNIQUE` (`matricula` ASC),
+  INDEX `fk_usuario_tipoCuenta1_idx` (`tipoCuenta_tipo` ASC),
   CONSTRAINT `fk_usuario_tipoCuenta1`
     FOREIGN KEY (`tipoCuenta_tipo`)
     REFERENCES `asesorapp`.`tipoCuenta` (`tipo`)
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `asesorapp`.`estado` (
   `estado` VARCHAR(45) NOT NULL,
   `tipo` TINYINT NOT NULL,
   PRIMARY KEY (`noEstado`),
-  UNIQUE INDEX `noEstado_UNIQUE` (`noEstado` ASC) VISIBLE)
+  UNIQUE INDEX `noEstado_UNIQUE` (`noEstado` ASC))
 ENGINE = InnoDB;
 
 
@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `asesorapp`.`asesoria` (
   `estado_noEstado` INT NOT NULL,
   `usuario_matricula` INT NOT NULL,
   PRIMARY KEY (`idasesoria`),
-  INDEX `fk_asesoria_estado_idx` (`estado_noEstado` ASC) VISIBLE,
-  INDEX `fk_asesoria_usuario1_idx` (`usuario_matricula` ASC) VISIBLE,
+  INDEX `fk_asesoria_estado_idx` (`estado_noEstado` ASC),
+  INDEX `fk_asesoria_usuario1_idx` (`usuario_matricula` ASC),
   CONSTRAINT `fk_asesoria_estado`
     FOREIGN KEY (`estado_noEstado`)
     REFERENCES `asesorapp`.`estado` (`noEstado`)
@@ -95,9 +95,9 @@ CREATE TABLE IF NOT EXISTS `asesorapp`.`peticion` (
   `estado_noEstado` INT NOT NULL,
   `asesoria_idasesoria` INT NOT NULL,
   PRIMARY KEY (`idpeticion`),
-  INDEX `fk_peticion_usuario1_idx` (`usuario_matricula` ASC) VISIBLE,
-  INDEX `fk_peticion_estado1_idx` (`estado_noEstado` ASC) VISIBLE,
-  INDEX `fk_peticion_asesoria1_idx` (`asesoria_idasesoria` ASC) VISIBLE,
+  INDEX `fk_peticion_usuario1_idx` (`usuario_matricula` ASC),
+  INDEX `fk_peticion_estado1_idx` (`estado_noEstado` ASC),
+  INDEX `fk_peticion_asesoria1_idx` (`asesoria_idasesoria` ASC),
   CONSTRAINT `fk_peticion_usuario1`
     FOREIGN KEY (`usuario_matricula`)
     REFERENCES `asesorapp`.`usuario` (`matricula`)
