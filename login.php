@@ -1,3 +1,45 @@
+<?php  
+    require('config/php/conexion.php');
+    session_start();
+if(!empty($_POST['matricula']) && !empty($_POST['pass'])){
+    $matricula = $_POST['matricula'];
+    $pass = $_POST['pass'];
+    if($result1=$conn->query("SELECT * FROM usuario WHERE matricula='$matricula' AND contraseña='$pass'")){
+        foreach($result1 as $r5){
+            $_SESSION['matricula']=$matricula;
+            $tipoCuenta_tipo=$r5['tipoCuenta_tipo'];
+        }
+                if($tipoCuenta_tipo == 0){
+                    header('Location: inicioAdmin.php');
+                }
+                elseif($tipoCuenta_tipo == 1){
+                    header('Location: inicioAlumno.php');
+                }
+                else{
+                    header('Location: inicioProfesor.php');
+                }
+            /*}
+            else{
+                
+                    <div class="alert alert-danger" role="alert">
+                        El correo o la contraseña es incorrecta1
+                    </div>
+                <?php
+            }*/
+    }
+    else{
+        ?>
+            <div class="alert alert-danger" role="alert">
+                El correo o la contraseña es incorrecta2
+            </div>
+        <?php
+    }
+
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -20,7 +62,7 @@
             </div>
         </h5>
         <nav class="p-3">
-            <a class="px-2 text-white" href="registro.html">Registrarse</a>
+            <a class="px-2 text-white" href="registro.php">Registrarse</a>
         </nav>
     </div>
 
@@ -29,16 +71,16 @@
             <div class="card shadow-lg mb-3 bg-white">
                 <div class="card-body">
                     <h1 class="text-center h2 mb-3">Iniciar sesión</h1>
-                    <form class="justify-content-center">
-                        <label for="inputMatricula">Ingrese matricula:</label>
+                    <form class="justify-content-center" method="POST">
+                        <label for="inputMatricula">Matricula:</label>
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control" id="inputAddress2" placeholder="Matricula">
+                            <input type="text" class="form-control" id="inputAddress2" placeholder="Matricula" name="matricula">
                         </div><br>
                         <div class="form-group col-md-8">
-                            <label for="inputPassword4">Ingrese contraseña:</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña">
+                            <label for="inputPassword4">Contraseña:</label>
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña" name="pass">
                         </div><br>
-                        <button type="submit" class="btn text-white mb-2" style="background-color: #334257;">Iniciar sesión</button>
+                        <input type="submit" class="btn text-white mb-2" style="background-color: #334257;" value="Iniciar sesión">
                     </form>
                 </div>
             </div>

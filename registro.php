@@ -1,11 +1,13 @@
 <?php  
-  require('config/php/conexion.php');
+    require('config/php/conexion.php');
 if(!empty($_POST['nombre']) && !empty($_POST['matricula']) && !empty($_POST['correo']) && !empty($_POST['pass'])){
 	$nombre = $_POST['nombre'];
     $matricula = $_POST['matricula'];
     $correo = $_POST['correo'];
-    $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT, [15]);
+    #$pass = password_hash($_POST['pass'], PASSWORD_DEFAULT, [15]); //Error en la encriptación
+    $pass = $_POST['pass'];
     $tipo = $_POST['tipo'];
+    try{
     if($tipo == "tipo1"){
         if( strpos($correo, "@alumno.buap.mx") ){
             if( $result1=$conn->query("INSERT INTO usuario
@@ -37,6 +39,13 @@ if(!empty($_POST['nombre']) && !empty($_POST['matricula']) && !empty($_POST['cor
             </div>
             <?php
         }
+    }
+    } catch (Exception $e){
+        ?>
+            <div class="alert alert-danger" role="alert">
+                El correo ingresado no es institucional
+            </div>
+        <?php
     }
 
 }
